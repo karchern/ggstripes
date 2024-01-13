@@ -31,13 +31,9 @@ mtcars$car <- rownames(mtcars)
 ggplot(data = mtcars
 , aes(x = car, y = mpg)) +
     geom_stripes_vertical(odd = "#33333333", even = "#00000000")  +
-    geom_point()
+    geom_point() +
+    theme_bw()
 ```
-
-    ## Warning: Using the `size` aesthetic with geom_rect was deprecated in ggplot2 3.4.0.
-    ## ℹ Please use the `linewidth` aesthetic instead.
-    ## This warning is displayed once every 8 hours.
-    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 
 ![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
@@ -45,7 +41,8 @@ ggplot(data = mtcars
 ggplot(data = mtcars 
 , aes(x = mpg, y = car)) +
     geom_stripes_horizontal(odd = "#33333333", even = "#00000000") +
-    geom_point()
+    geom_point() +
+    theme_bw()
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
@@ -56,12 +53,10 @@ It also works with faceting:
 mtcars$group <- as.factor(sample(c('a', 'b', 'c'), size = nrow(mtcars), replace = TRUE))
 ggplot(data = mtcars
 , aes(x = mpg, y = car)) +
-    geom_stripes_horizontal(odd = "#33333333", even = "#00000000", along = "x") +
+    geom_stripes_horizontal(odd = "#33333333", even = "#00000000") +
     geom_point() +
-    facet_grid(group ~ .)
+    facet_grid(group ~ .) + 
+    theme_bw()
 ```
-
-    ## Warning in geom_stripes_horizontal(odd = "#33333333", even = "#00000000", :
-    ## Ignoring unknown parameters: `along`
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->

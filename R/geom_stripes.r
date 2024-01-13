@@ -66,14 +66,13 @@ GeomStripes <- ggplot2::ggproto("GeomStripes", ggplot2::Geom,
         # requested 0th size. Seems to be some ggplot2 bug caused by grid overriding
         # an lwd parameter somewhere, unless the size is set to NA. Found solution here
         # https://stackoverflow.com/questions/43417514/getting-rid-of-border-in-pdf-output-for-geom-label-for-ggplot2-in-r
-        alpha = NA, colour = "black", linetype = "solid", size = NA
+        alpha = NA, colour = "black", linetype = "solid", linewidth = NA
     ),
     draw_key = ggplot2::draw_key_rect
 )
 
 GeomStripesX <- ggplot2::ggproto("GeomStripesX", GeomStripes,
   draw_panel = function(data, panel_params, coord) {
-    browser()
     ggplot2::GeomRect$draw_panel(
       # in case we have facets, not every row/column of every sample will necessarily be present
       # I resort to this hack for now, since I don't know how to access the parent data
@@ -81,7 +80,7 @@ GeomStripesX <- ggplot2::ggproto("GeomStripesX", GeomStripes,
           full_join(data.frame(
               y = attributes(panel_params$y.sec$breaks)$pos
           ), by = "y") %>%
-          mutate(across(all_of(c("xmin", "xmax", "odd", "even", "alpha", "colour", "linetype", "size")), ~ .[!is.na(.)][1])) %>%
+          mutate(across(all_of(c("xmin", "xmax", "odd", "even", "alpha", "colour", "linetype", "linewidth")), ~ .[!is.na(.)][1])) %>%
         dplyr::mutate(
           y = round(.data$y),
           ymin = .data$y - 0.5,
@@ -91,7 +90,7 @@ GeomStripesX <- ggplot2::ggproto("GeomStripesX", GeomStripes,
           .data$xmin, .data$xmax,
           .data$ymin, .data$ymax,
           .data$odd, .data$even,
-          .data$alpha, .data$colour, .data$linetype, .data$size
+          .data$alpha, .data$colour, .data$linetype, .data$linewidth
         ) %>%
         distinct() %>%
         dplyr::arrange(.data$ymin) %>%
@@ -112,7 +111,6 @@ GeomStripesX <- ggplot2::ggproto("GeomStripesX", GeomStripes,
 
 GeomStripesY <- ggplot2::ggproto("GeomStripesY", GeomStripes,
   draw_panel = function(data, panel_params, coord) {
-    browser()
     ggplot2::GeomRect$draw_panel(
       # in case we have facets, not every row/column of every sample will necessarily be present
       # I resort to this hack for now, since I don't know how to access the parent data
@@ -120,7 +118,7 @@ GeomStripesY <- ggplot2::ggproto("GeomStripesY", GeomStripes,
           full_join(data.frame(
               x = attributes(panel_params$x.sec$breaks)$pos
           ), by = "x") %>%
-          mutate(across(all_of(c("ymin", "ymax", "odd", "even", "alpha", "colour", "linetype", "size")), ~ .[!is.na(.)][1])) %>%
+          mutate(across(all_of(c("ymin", "ymax", "odd", "even", "alpha", "colour", "linetype", "linewidth")), ~ .[!is.na(.)][1])) %>%
               arrange(x) %>%
         dplyr::mutate(
           x = round(.data$x),
@@ -131,7 +129,7 @@ GeomStripesY <- ggplot2::ggproto("GeomStripesY", GeomStripes,
           .data$xmin, .data$xmax,
           .data$ymin, .data$ymax,
           .data$odd, .data$even,
-          .data$alpha, .data$colour, .data$linetype, .data$size
+          .data$alpha, .data$colour, .data$linetype, .data$linewidth
         ) %>%
         distinct() %>%
         dplyr::arrange(.data$ymin) %>%

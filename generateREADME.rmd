@@ -28,14 +28,16 @@ mtcars$car <- rownames(mtcars)
 ggplot(data = mtcars
 , aes(x = car, y = mpg)) +
     geom_stripes_vertical(odd = "#33333333", even = "#00000000")  +
-    geom_point()
+    geom_point() +
+    theme_bw()
 ```
 
 ```{r}
 ggplot(data = mtcars 
 , aes(x = mpg, y = car)) +
     geom_stripes_horizontal(odd = "#33333333", even = "#00000000") +
-    geom_point()
+    geom_point() +
+    theme_bw()
 ```
 
 It also works with faceting:
@@ -46,9 +48,10 @@ It also works with faceting:
 mtcars$group <- as.factor(sample(c('a', 'b', 'c'), size = nrow(mtcars), replace = TRUE))
 ggplot(data = mtcars
 , aes(x = mpg, y = car)) +
-    geom_stripes_horizontal(odd = "#33333333", even = "#00000000", along = "x") +
+    geom_stripes_horizontal(odd = "#33333333", even = "#00000000") +
     geom_point() +
-    facet_grid(group ~ .)
+    facet_grid(group ~ .) + 
+    theme_bw()
 
 ```
 
