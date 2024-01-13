@@ -3,9 +3,8 @@
 
 library(ggplot2)
 library(tidyverse)
-library(devtools)
 load_all()
-#library(ggstripes)
+library(ggstripes)
 
 p <- ggplot(data = mtcars 
     %>% mutate(car = rownames(.))
