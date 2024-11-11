@@ -19,7 +19,7 @@ The package can be can be installed via
 The package provides a single function `geom_stripes` which can be used
 like any other geom in ggplot2.
 
-It only works if the scale is discrete.
+It only works if the scale is discrete, and if you set the aesthetics in the call for `ggplot`. Sorry about that.
 
 ``` r
 library(ggplot2)
